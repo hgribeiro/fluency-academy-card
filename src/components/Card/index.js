@@ -11,6 +11,7 @@ import {
   CardBody,
   TextStyled,
   SecondsStyled,
+  SuperContainer,
 } from './styles';
 
 import PlayIcon from '../../assets/Shape.svg';
@@ -24,6 +25,7 @@ function Card() {
   const [currentCard, setcurrentCard] = useState();
   const [currentAudioDuration, setCurrentAudioDuration] = useState();
   const [play, setPlay] = useState('false');
+  const [switchCard, setSwitchCard] = useState(false);
 
   useEffect(() => {
     async function loadCard() {
@@ -43,46 +45,60 @@ function Card() {
     setCurrentAudioDuration(`00:0${timeArray[0]}`);
   };
   return (
-    <Container>
-      <CardHeader>
-        <TurnStyled type="button">
-          <img src={TurnIcon} alt="play player" /> Virar carta
-        </TurnStyled>
-        <span>
-          <span>A </span>
-          <span>\ B</span>
-        </span>
-      </CardHeader>
-      <CardBody>
-        <TextStyled>{audioText.text}</TextStyled>
-        <div>
-          <div>
-            <SecondsStyled>{currentAudioDuration}</SecondsStyled>
-            {/* <img src={} alt='audio' /> */}
+    <SuperContainer>
+      <input type="checkbox" id="switch" checked={switchCard} />
+      <div className="flip-container">
+        <div className="flipper">
+          <div className="front">
+            <Container>
+              <CardHeader>
+                <TurnStyled type="button" onClick={() => setSwitchCard(true)}>
+                  <img src={TurnIcon} alt="play player" /> Virar carta
+                </TurnStyled>
+                <span>
+                  <span>A </span>
+                  <span>\ B</span>
+                </span>
+              </CardHeader>
+              <CardBody>
+                <TextStyled>{audioText.text}</TextStyled>
+                <div>
+                  <div>
+                    <SecondsStyled>{currentAudioDuration}</SecondsStyled>
+                    {/* <img src={} alt='audio' /> */}
+                  </div>
+                  {audioText.audio !== '' && (
+                    <ReactPlayer
+                      // controls="true"
+                      playing={play}
+                      url={audioText.audio}
+                      onEnded={() => setPlay(false)}
+                      onPause={() => setPlay(false)}
+                      width="0"
+                      height="0"
+                      onDuration={(totalTime) => toSecods(totalTime)}
+                    />
+                  )}
+                  {/* {audioText.audio !== '' && <source src={audioText.audio} />} */}{' '}
+                  <ButtonStyled
+                    type="button"
+                    onClick={() =>
+                      play === true ? setPlay(false) : setPlay(true)
+                    }
+                  >
+                    {' '}
+                    <img src={PlayIcon} alt="play player" />
+                  </ButtonStyled>
+                </div>
+              </CardBody>
+            </Container>
           </div>
-          {audioText.audio !== '' && (
-            <ReactPlayer
-              // controls="true"
-              playing={play}
-              url={audioText.audio}
-              onEnded={() => setPlay(false)}
-              onPause={() => setPlay(false)}
-              width="0"
-              height="0"
-              onDuration={(totalTime) => toSecods(totalTime)}
-            />
-          )}
-          {/* {audioText.audio !== '' && <source src={audioText.audio} />} */}{' '}
-          <ButtonStyled
-            type="button"
-            onClick={() => (play === true ? setPlay(false) : setPlay(true))}
-          >
-            {' '}
-            <img src={PlayIcon} alt="play player" />
-          </ButtonStyled>
+          <div className="back">
+            <img src="https://picsum.photos/id/249/300/200" />
+          </div>
         </div>
-      </CardBody>
-    </Container>
+      </div>
+    </SuperContainer>
   );
 }
 
