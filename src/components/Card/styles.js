@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 // eslint-disable-next-line import/prefer-default-export
 export const Container = styled.div`
@@ -34,9 +34,9 @@ export const CardHeader = styled.div`
     text-align: left;
     font: normal normal normal 18px/11px Fira Sans;
     letter-spacing: 0px;
-    color: #000000;
+    color: #c2c2c2;
     opacity: 1;
-    &:nth-child(2) {
+    &:nth-child(${(props) => (props.back ? 3 : 1)}) {
       font: var(--unnamed-font-style-normal) normal
         var(--unnamed-font-weight-normal) 18px/11px
         var(--unnamed-font-family-fira-sans);
@@ -45,7 +45,9 @@ export const CardHeader = styled.div`
       text-align: right;
       font: normal normal normal 18px/11px Fira Sans;
       letter-spacing: 0px;
-      color: #c2c2c2;
+      /* color: #c2c2c2; */
+      color: #000000;
+
       opacity: 1;
     }
   }

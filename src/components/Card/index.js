@@ -57,7 +57,8 @@ function Card() {
                 </TurnStyled>
                 <span>
                   <span>A </span>
-                  <span>\ B</span>
+                  <span>\ </span>
+                  <span> B</span>
                 </span>
               </CardHeader>
               <CardBody>
@@ -94,7 +95,49 @@ function Card() {
             </Container>
           </div>
           <div className="back">
-            <img src="https://picsum.photos/id/249/300/200" />
+            <Container>
+              <CardHeader back>
+                <TurnStyled type="button" onClick={() => setSwitchCard(false)}>
+                  <img src={TurnIcon} alt="play player" /> Virar carta
+                </TurnStyled>
+                <span>
+                  <span>A </span>
+                  <span>\ </span>
+                  <span> B</span>
+                </span>
+              </CardHeader>
+              <CardBody>
+                <TextStyled>{audioText.text}</TextStyled>
+                <div>
+                  <div>
+                    <SecondsStyled>{currentAudioDuration}</SecondsStyled>
+                    {/* <img src={} alt='audio' /> */}
+                  </div>
+                  {audioText.audio !== '' && (
+                    <ReactPlayer
+                      // controls="true"
+                      playing={play}
+                      url={audioText.audio}
+                      onEnded={() => setPlay(false)}
+                      onPause={() => setPlay(false)}
+                      width="0"
+                      height="0"
+                      onDuration={(totalTime) => toSecods(totalTime)}
+                    />
+                  )}
+                  {/* {audioText.audio !== '' && <source src={audioText.audio} />} */}{' '}
+                  <ButtonStyled
+                    type="button"
+                    onClick={() =>
+                      play === true ? setPlay(false) : setPlay(true)
+                    }
+                  >
+                    {' '}
+                    <img src={PlayIcon} alt="play player" />
+                  </ButtonStyled>
+                </div>
+              </CardBody>
+            </Container>
           </div>
         </div>
       </div>
